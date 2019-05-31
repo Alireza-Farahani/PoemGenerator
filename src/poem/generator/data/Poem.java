@@ -1,7 +1,6 @@
 package poem.generator.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class Poem {
         ArrayList<Distich> res = new ArrayList<Distich>();
 
         if (meter.isEmpty()) {
-            Distich distich = new Distich(mainMeter);
+            Distich distich = new Distich();
             res.add(distich);
             return res;
         }
@@ -83,15 +82,4 @@ public class Poem {
 
         return new Word(title, meter);
     }
-
-    private Boolean listHasThisDistich(final List<Distich> list, final String distichTitle) {
-        for (Distich item : list) {
-            String itemTitle = item.getTitle();
-            if (distichTitle.equals(itemTitle)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
