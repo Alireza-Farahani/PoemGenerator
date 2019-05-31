@@ -1,6 +1,7 @@
 package poem.generator.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,26 +44,27 @@ public class Poem {
     }
 
     public ArrayList<Distich> generateDistichList() {
+        return generateDistichList(mainMeter);
+    }
+
+    private ArrayList<Distich> generateDistichList(String meter) {
         ArrayList<Distich> res = new ArrayList<Distich>();
 
-        int numberOfMainMeterWords = this.mainMeter.split(" ").length;
-
-        for (int i = 0; i < numberOfMainMeterWords; i++) {
-            Distich distich = new Distich(this.mainMeter);
-            for (int j = 0; j < numberOfMainMeterWords; j++) {
-                for (Word word : this.words) {
-                    distich.addWord(word);
-                    if (distich.isMatchWithMainMeter()) {
-                        if (distich.getMeter().length() == mainMeter.length() && !listHasThisDistich(res, distich.getTitle())) {
-                            res.add(distich);
-                        }
-                    } else {
-                        distich.clearLastItem();
-                    }
-                }
-            }
+        if (meter.isEmpty()) {
+            Distich distich = new Distich(mainMeter);
+            res.add(distich);
+            return res;
         }
 
+        for (Word word : words) {
+            if (meter.startsWith(word.getMeter())) {
+                ArrayList<Distich> tempDistichs = generateDistichList(meter.replaceFirst(word.getMeter(), "").trim());
+                for (Distich tempDistich : tempDistichs) {
+                    tempDistich.addWordToBeginning(word);
+                }
+                res.addAll(tempDistichs);
+            }
+        }
         return res;
     }
 

@@ -51,4 +51,8 @@ public class Distich {
 	public void clearLastItem() {
 		this.words.remove(this.words.size() - 1);
 	}
+
+	public void addWordToBeginning(Word word) {
+		words.add(0, word);
+	}
 }

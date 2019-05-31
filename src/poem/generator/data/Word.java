@@ -21,4 +21,8 @@ public class Word {
 		return title;
 	}
 
+	@Override
+	public String toString() {
+		return title + ": " + meter;
+	}
 }
