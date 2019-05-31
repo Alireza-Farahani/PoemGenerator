@@ -8,21 +8,10 @@ import java.util.List;
  */
 public class Distich {
 
-    private List<Word> words;
+    private final List<Word> words;
 
     public Distich() {
-        this.words = new ArrayList<Word>();
-    }
-
-    public String getMeter() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < this.words.size(); i++) {
-            sb.append(this.words.get(i).getMeter());
-            if (i != this.words.size() - 1) {
-                sb.append(" ");
-            }
-        }
-        return sb.toString();
+        this.words = new ArrayList<>();
     }
 
     public String getTitle() {

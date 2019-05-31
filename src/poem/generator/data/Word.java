@@ -5,8 +5,8 @@ package poem.generator.data;
  */
 public class Word {
 
-    private String meter;
-    private String title;
+    private final String meter;
+    private final String title;
 
     public Word(String title, String meter) {
         this.title = title;

@@ -10,10 +10,10 @@ import java.util.List;
 public class Poem {
 
     private String mainMeter;
-    private List<Word> words;
+    private final List<Word> words;
 
     public Poem() {
-        this.words = new ArrayList<Word>();
+        this.words = new ArrayList<>();
     }
 
     public void init(String fileName) {
@@ -37,8 +37,8 @@ public class Poem {
         System.out.println("(" + this.mainMeter + ")");
         System.out.println("Words:");
 
-        for (int i = 0; i < words.size(); i++) {
-            System.out.println("(" + words.get(i).getTitle() + ")-(" + words.get(i).getMeter() + ")");
+        for (Word word : words) {
+            System.out.println("(" + word.getTitle() + ")-(" + word.getMeter() + ")");
         }
     }
 
@@ -47,7 +47,7 @@ public class Poem {
     }
 
     private ArrayList<Distich> generateDistichList(String meter) {
-        ArrayList<Distich> res = new ArrayList<Distich>();
+        ArrayList<Distich> res = new ArrayList<>();
 
         if (meter.isEmpty()) {
             Distich distich = new Distich();
@@ -77,8 +77,7 @@ public class Poem {
     private Word wordDelimiter(String hemistich) {
 
         String title = hemistich.substring(0, hemistich.indexOf(" "));
-        String meter = hemistich.substring(hemistich.indexOf(" ") + 1,
-                hemistich.length());
+        String meter = hemistich.substring(hemistich.indexOf(" ") + 1);
 
         return new Word(title, meter);
     }
