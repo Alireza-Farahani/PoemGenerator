@@ -50,9 +50,11 @@ public class Poet {
 
         return words.stream()
                 .filter(word -> meter.startsWith(word.getMeter()))
-                .flatMap(word ->
-                        generateHemistiches(meter.replaceFirst(word.getMeter(), "").trim())
-                                .peek(tempHemistich -> tempHemistich.addWordToBeginning(word)));
+                .flatMap(word -> {
+                    final String partialMeter = meter.replaceFirst(word.getMeter(), "").trim();
+                    return generateHemistiches(partialMeter)
+                            .peek(partialHemistich -> partialHemistich.addWordToBeginning(word));
+                });
     }
 
     public void printDistichList(List<Hemistich> hemistiches) {
