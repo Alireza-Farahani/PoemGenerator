@@ -2,6 +2,7 @@ package poem.generator.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Elyas-Dolatabadi
@@ -16,16 +17,7 @@ public class Hemistich {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < this.words.size(); i++) {
-            sb.append(this.words.get(i).getText());
-            if (i != this.words.size() - 1) {
-                sb.append(" ");
-            }
-        }
-
-        return sb.toString();
+        return words.stream().map(Word::getText).collect(Collectors.joining(" "));
     }
 
     public void addWordToBeginning(Word word) {

@@ -1,8 +1,9 @@
 package poem.generator.data;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Elyas-Dolatabadi
@@ -10,7 +11,7 @@ import java.util.List;
 public class Poet {
 
     private String hemistichMeter;
-    private final List<Word> words;
+    private List<Word> words;
 
     public Poet() {
         this.words = new ArrayList<>();
@@ -19,59 +20,44 @@ public class Poet {
     public void parseInput(String fileName) {
         FileReader reader = new FileReader();
 
-        List<String> linesList = reader.readLines(fileName);
-        Iterator<String> itr = linesList.iterator();
-        this.hemistichMeter = itr.next();
+        List<String> lines = reader.readLines(fileName);
+        this.hemistichMeter = lines.get(0); //itr.next();
 
-        while (itr.hasNext()) {
-            String wordTextAndWordMeter = itr.next();
-            if (wordTextAndWordMeter != null && !wordTextAndWordMeter.isEmpty()) {
-                Word word = extractWord(wordTextAndWordMeter);
-                words.add(word);
-            }
-        }
+        words = lines.stream()
+                .skip(1)
+                .filter(wordTextAndWordMeter -> wordTextAndWordMeter != null && !wordTextAndWordMeter.isEmpty())
+                .map(this::extractWord)
+                .collect(Collectors.toList());
     }
 
     public void printFirstInformation() {
         System.out.println("Main Meter:");
         System.out.println("(" + this.hemistichMeter + ")");
         System.out.println("Words:");
-
-        for (Word word : words) {
-            System.out.println("(" + word.getText() + ")-(" + word.getMeter() + ")");
-        }
+        words.forEach(word ->
+                System.out.println("(" + word.getText() + ")-(" + word.getMeter() + ")"));
     }
 
     public ArrayList<Hemistich> generateHemistiches() {
-        return generateHemistiches(hemistichMeter);
+        return generateHemistiches(hemistichMeter).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private ArrayList<Hemistich> generateHemistiches(String meter) {
-        ArrayList<Hemistich> result = new ArrayList<>();
+    private Stream<Hemistich> generateHemistiches(String meter) {
 
         if (meter.isEmpty()) {
-            Hemistich hemistich = new Hemistich();
-            result.add(hemistich);
-            return result;
+            return Stream.of(new Hemistich());
         }
 
-        for (Word word : words) {
-            if (meter.startsWith(word.getMeter())) {
-                ArrayList<Hemistich> tempHemistiches = generateHemistiches(meter.replaceFirst(word.getMeter(), "").trim());
-                for (Hemistich tempHemistich : tempHemistiches) {
-                    tempHemistich.addWordToBeginning(word);
-                }
-                result.addAll(tempHemistiches);
-            }
-        }
-        return result;
+        return words.stream()
+                .filter(word -> meter.startsWith(word.getMeter()))
+                .flatMap(word ->
+                        generateHemistiches(meter.replaceFirst(word.getMeter(), "").trim())
+                                .peek(tempHemistich -> tempHemistich.addWordToBeginning(word)));
     }
 
     public void printDistichList(ArrayList<Hemistich> hemistiches) {
         System.out.println("Generated Poet:");
-        for (Hemistich hemistich : hemistiches) {
-            System.out.println(hemistich.toString());
-        }
+        hemistiches.forEach(hemistich -> System.out.println(hemistich.toString()));
     }
 
     private Word extractWord(String hemistich) {
