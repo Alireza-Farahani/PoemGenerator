@@ -1,5 +1,5 @@
-import poem.generator.data.Distich;
-import poem.generator.data.Poem;
+import poem.generator.data.Hemistich;
+import poem.generator.data.Poet;
 
 import java.util.ArrayList;
 
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        Poem myPoem = new Poem();
-        myPoem.init("./in/poem1.txt");
-        ArrayList<Distich> distichList = myPoem.generateDistichList();
-        myPoem.printFirstInformation();
-        myPoem.printDistichList(distichList);
+        Poet myPoet = new Poet();
+        myPoet.parseInput("./in/poem1.txt");
+        ArrayList<Hemistich> hemistichList = myPoet.generateHemistiches();
+        myPoet.printFirstInformation();
+        myPoet.printDistichList(hemistichList);
     }
 }

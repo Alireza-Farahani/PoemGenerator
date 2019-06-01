@@ -6,10 +6,10 @@ package poem.generator.data;
 public class Word {
 
     private final String meter;
-    private final String title;
+    private final String text;
 
-    public Word(String title, String meter) {
-        this.title = title;
+    public Word(String text, String meter) {
+        this.text = text;
         this.meter = meter;
     }
 
@@ -17,12 +17,12 @@ public class Word {
         return meter;
     }
 
-    public String getTitle() {
-        return title;
+    public String getText() {
+        return text;
     }
 
     @Override
     public String toString() {
-        return title + ": " + meter;
+        return text + ": " + meter;
     }
 }

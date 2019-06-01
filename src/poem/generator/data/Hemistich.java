@@ -6,19 +6,20 @@ import java.util.List;
 /**
  * @author Elyas-Dolatabadi
  */
-public class Distich {
+public class Hemistich {
 
     private final List<Word> words;
 
-    public Distich() {
+    public Hemistich() {
         this.words = new ArrayList<>();
     }
 
-    public String getTitle() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < this.words.size(); i++) {
-            sb.append(this.words.get(i).getTitle());
+            sb.append(this.words.get(i).getText());
             if (i != this.words.size() - 1) {
                 sb.append(" ");
             }

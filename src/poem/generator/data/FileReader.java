@@ -10,9 +10,9 @@ import java.util.List;
 /**
  * @author Elyas-Dolatabadi
  */
-public class ReadFileIntoList {
+public class FileReader {
 
-    public List<String> ReadFile(String fileName) {
+    public List<String> readLines(String fileName) {
 
         List<String> lines = Collections.emptyList();
         try {
