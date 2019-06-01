@@ -38,8 +38,8 @@ public class Poet {
                 System.out.println("(" + word.getText() + ")-(" + word.getMeter() + ")"));
     }
 
-    public ArrayList<Hemistich> generateHemistiches() {
-        return generateHemistiches(hemistichMeter).collect(Collectors.toCollection(ArrayList::new));
+    public List<Hemistich> generateHemistiches() {
+        return generateHemistiches(hemistichMeter).collect(Collectors.toList());
     }
 
     private Stream<Hemistich> generateHemistiches(String meter) {
@@ -55,7 +55,7 @@ public class Poet {
                                 .peek(tempHemistich -> tempHemistich.addWordToBeginning(word)));
     }
 
-    public void printDistichList(ArrayList<Hemistich> hemistiches) {
+    public void printDistichList(List<Hemistich> hemistiches) {
         System.out.println("Generated Poet:");
         hemistiches.forEach(hemistich -> System.out.println(hemistich.toString()));
     }
