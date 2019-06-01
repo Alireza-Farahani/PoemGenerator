@@ -1,5 +1,9 @@
 package poem.generator.data;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,11 +21,10 @@ public class Poet {
         this.words = new ArrayList<>();
     }
 
-    public void parseInput(String fileName) {
-        FileReader reader = new FileReader();
+    public void parseInput(String fileName) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
 
-        List<String> lines = reader.readLines(fileName);
-        this.hemistichMeter = lines.get(0); //itr.next();
+        hemistichMeter = lines.get(0);
 
         words = lines.stream()
                 .skip(1)
